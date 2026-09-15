@@ -69,3 +69,14 @@ Since the PoC is contained within a single standalone file, deployment is instan
 ### Running Locally
 1. Clone this repository:
    git clone https://github.com/cease-uno/agentic-ai-intake-poc.git
+
+---
+## ⚙️ Customization & Risk Taxonomy Alignment
+
+The scoring logic in **agentic-ai-intake-poc** is fully modular and designed to adapt to your enterprise risk appetite:
+
+* **Custom Weights & Categories:** Easily modify numerical scores, options, or categories in `index.html` to match internal governance standards.
+* **Override Policies:** Add or update policy override triggers based on your organization's compliance boundaries (e.g., PCI-DSS, HIPAA, internal data handling guidelines).
+* **ITSM Mapping:** Map output tiers directly to ServiceNow approval workflows, Jira issue types, or automated gateway policies.
+
+For a complete breakdown of the scoring architecture and instructions on adapting the model, see SCORING_MODEL.md
