@@ -1,7 +1,8 @@
 # agentic-ai-intake-poc: Agentic AI Solution Governance & Intake Portal
 
-<img width="1270" height="664" alt="image" src="https://github.com/user-attachments/assets/918f4a4d-ed70-44bf-a38f-e0a9105904f7" />
-
+<img width="1274" height="663" alt="image" src="https://github.com/user-attachments/assets/2dd92add-e379-486d-a3dc-345d380a890f" />
+<img width="1272" height="663" alt="image" src="https://github.com/user-attachments/assets/624bd1d9-2e26-4c5c-adb7-48117ad4f28a" />
+<img width="1272" height="703" alt="image" src="https://github.com/user-attachments/assets/a0526f47-843e-4d02-887a-b000ebbf1be1" />
 
 An interactive, single-page web application and risk-scoring engine designed to streamline, classify, and triage incoming **Agentic AI** solutions across the enterprise.
 
