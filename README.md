@@ -1,2 +1,72 @@
-# triageai
-Streamline, classify, and score incoming AI agents in real time to accelerate governance and ITSM workflows.
+# agentic-ai-intake-poc: Agentic AI Solution Governance & Intake Portal
+
+An interactive, single-page web application and risk-scoring engine designed to streamline, classify, and triage incoming **Agentic AI** solutions across the enterprise.
+
+Built on top of established AI safety, cybersecurity, and risk management standards—specifically the **NIST AI Risk Management Framework (AI RMF 1.0)** and the **OWASP Top 10 for LLMs & Agentic AI**—this Proof of Concept (PoC) demonstrates how organizations can achieve rapid AI adoption without compromising security, data privacy, or operational control.
+
+---
+
+## 🎯 Intended Purpose & ITSM / Jira Integration
+
+The primary purpose of **agentic-ai-intake-poc** is to serve as a standardized intake mechanism that can be integrated directly into enterprise ITSM solution catalogs (such as **ServiceNow**) or **Jira Service Management (JSM)**.
+
+By embedding this scoring logic into your existing ticketing or service catalog workflows, organizations can:
+* **Streamline Intake:** Provide business units and developers with a simple, friction-free self-service form to register new AI agents.
+* **Automate Classification:** Automatically assign risk levels, blast radius parameters, and target SLAs without manual security triage.
+* **Optimize Resource Allocation:** Route low-risk agents through fast-track auto-approvals while directing high-risk autonomous agents to dedicated AppSec and AI Risk review queues.
+
+---
+
+## 📚 Governance Framework & Foundations
+
+The underlying intake questions and scoring logic are directly anchored in two leading industry frameworks:
+
+1. **NIST AI Risk Management Framework (AI RMF 1.0):** Operationalizes the **Govern, Map, Measure, and Manage** core functions. It shifts the focus from static IT compliance to socio-technical risk management, evaluating model autonomy, execution guardrails, and context boundaries.
+2. **OWASP Top 10 for LLMs & Agentic AI:** Specifically addresses agent-centric risk vectors including **Excessive Agency** (Action Execution Scope), **Non-Human Identity & Privilege Abuse** (Identity Context), **Indirect Prompt Injection**, and **Unintended Autonomy** (Action Reversibility & Autonomy Level).
+
+---
+
+## 💡 How the Portal Works
+
+The portal provides a **lightweight, self-service intake process** that automatically evaluates an agent's capability, data scope, and privilege boundaries. It converts user responses into a real-time risk score, automatically routing requests to the appropriate review track:
+
+* **Tier 1 (Low Risk):** Fast-track auto-approval for read-only or low-impact assistants (< 24h SLA).
+* **Tier 2 (Medium Risk):** Lightweight security check focused on identity boundaries and logging (2–3 Day SLA).
+* **Tier 3 (High Risk):** Full NIST AI RMF assessment for autonomous, high-impact, or restricted-data agents (5–7 Day SLA).
+
+### The 5 Assessment Categories
+Users complete five key technical and operational evaluation questions:
+* **A. Autonomy & Execution Independence:** Measures how independently the agent plans and executes decisions without human intervention.
+* **B. Data Classification Scope:** Identifies the highest data classification level passing through the agent's context window or prompt logs.
+* **C. Action Execution Scope:** Evaluates the depth of API, system, and execution access granted to the agent.
+* **D. Identity & Auth Context:** Assesses how the agent authenticates (e.g., delegated user RBAC vs. shared/over-privileged service accounts).
+* **E. Action Reversibility:** Evaluates whether unintended actions or hallucinated steps can be safely rolled back.
+
+*Note: Each header includes an interactive `ⓘ Info` modal that explains what the category measures and why it matters for governance.*
+
+---
+
+## 🛠️ Real-Time Dynamic Scoring Engine
+
+As the user selects options, an embedded JavaScript engine calculates a cumulative risk score ($0–24$ points) in real time:
+
+$$\text{Total Score} = \text{Autonomy} + \text{Data Sensitivity} + \text{Action Scope} + \text{Identity Context} + \text{Reversibility}$$
+
+* **Automated Overrides:** Selecting **Restricted/Regulated Data**, **High-Impact/Admin APIs**, or **Irreversible Actions** triggers an automatic override that immediately escalates the request to **Tier 3 (High Risk)**, regardless of total points.
+
+The sidebar continuously updates to reflect:
+* Calculated Risk Score & Assigned Tier Status
+* Target Review SLA (< 24h, 2–3 Days, 5–7 Days)
+* Required Sign-Off Authority (Line Manager, AppSec, CISO/Risk Board)
+* NIST AI RMF Review Requirement (Exempt, Lightweight Check, Full Assessment)
+
+---
+
+## 🚀 Getting Started & Deployment
+
+Since the PoC is contained within a single standalone file, deployment is instant:
+
+### Running Locally
+1. Clone this repository:
+   ```bash
+   git clone [https://github.com/cease-uno/agentic-ai-intake-poc.git](https://github.com/cease-uno/agentic-ai-intake-poc.git)
