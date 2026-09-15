@@ -1,5 +1,8 @@
 # agentic-ai-intake-poc: Agentic AI Solution Governance & Intake Portal
 
+<img width="1270" height="664" alt="image" src="https://github.com/user-attachments/assets/918f4a4d-ed70-44bf-a38f-e0a9105904f7" />
+
+
 An interactive, single-page web application and risk-scoring engine designed to streamline, classify, and triage incoming **Agentic AI** solutions across the enterprise.
 
 Built on top of established AI safety, cybersecurity, and risk management standards—specifically the **NIST AI Risk Management Framework (AI RMF 1.0)** and the **OWASP Top 10 for LLMs & Agentic AI**—this Proof of Concept (PoC) demonstrates how organizations can achieve rapid AI adoption without compromising security, data privacy, or operational control.
