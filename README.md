@@ -68,5 +68,4 @@ Since the PoC is contained within a single standalone file, deployment is instan
 
 ### Running Locally
 1. Clone this repository:
-   ```bash
-   git clone [https://github.com/cease-uno/agentic-ai-intake-poc.git](https://github.com/cease-uno/agentic-ai-intake-poc.git)
+   git clone https://github.com/cease-uno/agentic-ai-intake-poc.git
