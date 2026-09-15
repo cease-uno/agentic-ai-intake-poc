@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic AI Intake & Governance Portal (PoC)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .modal { transition: opacity 0.25s ease; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen pb-12">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
+          <i class="fa-solid fa-robot text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-none text-white">agentic-ai-intake-poc</h1>
+          <p class="text-xs text-slate-400 mt-1">Enterprise AI Agent Triage & Risk Scoring Engine</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700">
+          <i class="fa-solid fa-shield-halved text-indigo-400 mr-1.5"></i> NIST AI RMF 1.0 & OWASP Aligned
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+      <!-- Form Section -->
+      <div class="lg:col-span-8 space-y-6">
+
+        <!-- Intro Card -->
+        <div class="bg-slate-800/50 border border-slate-700/60 rounded-2xl p-6 backdrop-blur">
+          <h2 class="text-xl font-bold text-white mb-2">Agent Risk Intake Assessment</h2>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Complete the technical profile below to evaluate model autonomy, permissions, data exposure, and reversibility. The risk engine calculates real-time blast radius metrics and determines approval routing SLAs.
+          </p>
+        </div>
+
+        <form id="intakeForm" class="space-y-6">
+
+          <!-- Category A -->
+          <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <label class="text-base font-semibold text-white flex items-center">
+                A. Autonomy & Execution Independence
+              </label>
+              <button type="button" onclick="openModal('modalA')" class="text-slate-400 hover:text-indigo-400 text-xs flex items-center transition">
+                <i class="fa-solid fa-circle-info mr-1"></i> Info
+              </button>
+            </div>
+            <select name="autonomy" onchange="calculateRisk()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="0">Level 0: Assistive (Human-in-the-loop for all steps; suggestions only)</option>
+              <option value="2">Level 1: Semi-Autonomous (Human confirms final action before execution)</option>
+              <option value="4">Level 2: Autonomous (Executes multi-step planning within defined boundaries)</option>
+              <option value="6">Level 3: Fully Autonomous (Self-directing goals, external tools, & feedback loops)</option>
+            </select>
+          </div>
+
+          <!-- Category B -->
+          <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <label class="text-base font-semibold text-white flex items-center">
+                B. Data Classification Scope
+              </label>
+              <button type="button" onclick="openModal('modalB')" class="text-slate-400 hover:text-indigo-400 text-xs flex items-center transition">
+                <i class="fa-solid fa-circle-info mr-1"></i> Info
+              </button>
+            </div>
+            <select name="dataScope" onchange="calculateRisk()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="0">Public Data Only (No PII, internal IP, or confidential context)</option>
+              <option value="2">Internal Non-Sensitive (General business docs, public KB)</option>
+              <option value="4">Confidential / Proprietary (Customer data, internal codebases, financial reports)</option>
+              <option value="6" data-override="true">Restricted / Regulated (PII, PHI, PCI, Credentials, Executive Secrets) [Escalates to Tier 3]</option>
+            </select>
+          </div>
+
+          <!-- Category C -->
+          <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <label class="text-base font-semibold text-white flex items-center">
+                C. Action Execution Scope
+              </label>
+              <button type="button" onclick="openModal('modalC')" class="text-slate-400 hover:text-indigo-400 text-xs flex items-center transition">
+                <i class="fa-solid fa-circle-info mr-1"></i> Info
+              </button>
+            </div>
+            <select name="actionScope" onchange="calculateRisk()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="0">Read-Only / Conversational (No state modifications)</option>
+              <option value="2">Low-Impact Write (Drafting emails, creating ticket drafts, sandboxed output)</option>
+              <option value="4">High-Impact Write (Modifying production records, executing API calls, sending active notifications)</option>
+              <option value="6" data-override="true">System / Admin Control (Infrastructure modification, IAM changes, financial transaction execution) [Escalates to Tier 3]</option>
+            </select>
+          </div>
+
+          <!-- Category D -->
+          <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <label class="text-base font-semibold text-white flex items-center">
+                D. Identity & Authentication Context
+              </label>
+              <button type="button" onclick="openModal('modalD')" class="text-slate-400 hover:text-indigo-400 text-xs flex items-center transition">
+                <i class="fa-solid fa-circle-info mr-1"></i> Info
+              </button>
+            </div>
+            <select name="identityContext" onchange="calculateRisk()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="0">Delegated User Session (Operates strict user RBAC/OAuth token scope)</option>
+              <option value="2">Scoped Non-Human Account (Least-privilege API key with strict IP/scope lockdown)</option>
+              <option value="4">Shared Service Account (Broad read/write API access across multiple systems)</option>
+              <option value="6">Elevated Non-Human Account (Admin/Superuser access with minimal execution friction)</option>
+            </select>
+          </div>
+
+          <!-- Category E -->
+          <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+              <label class="text-base font-semibold text-white flex items-center">
+                E. Action Reversibility
+              </label>
+              <button type="button" onclick="openModal('modalE')" class="text-slate-400 hover:text-indigo-400 text-xs flex items-center transition">
+                <i class="fa-solid fa-circle-info mr-1"></i> Info
+              </button>
+            </div>
+            <select name="reversibility" onchange="calculateRisk()" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+              <option value="0">Fully Reversible / N/A (Read-only or easy one-click undo)</option>
+              <option value="2">Partially Reversible (Requires manual admin intervention to roll back state)</option>
+              <option value="4" data-override="true">Irreversible (External emails sent, database drops, financial execution, public API posts) [Escalates to Tier 3]</option>
+            </select>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Live Sidebar / Scoreboard -->
+      <div class="lg:col-span-4">
+        <div class="sticky top-24 bg-slate-800/80 border border-slate-700 rounded-2xl p-6 backdrop-blur space-y-6 shadow-xl">
+          
+          <div>
+            <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">Assessment Summary</span>
+            <div class="flex items-baseline justify-between mt-2">
+              <span class="text-3xl font-extrabold text-white" id="scoreDisplay">0</span>
+              <span class="text-xs text-slate-400">/ 28 Max Score</span>
+            </div>
+          </div>
+
+          <div id="tierCard" class="p-4 rounded-xl border transition-all duration-300 bg-emerald-950/40 border-emerald-500/40 text-emerald-300">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold uppercase tracking-wider">Classification</span>
+              <span id="tierBadge" class="text-xs px-2 py-0.5 rounded-full font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Tier 1</span>
+            </div>
+            <h3 id="tierTitle" class="text-lg font-bold text-white">Low Risk Assistant</h3>
+            <p id="tierDesc" class="text-xs mt-1 text-slate-300 leading-relaxed">
+              Minimal blast radius. Standard auto-approval or lightweight sign-off.
+            </p>
+          </div>
+
+          <div class="border-t border-slate-700/60 pt-4 space-y-3 text-xs">
+            <div class="flex justify-between items-center">
+              <span class="text-slate-400">Review SLA:</span>
+              <span id="slaDisplay" class="font-semibold text-slate-200">&lt; 24 Hours (Fast-Track)</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-slate-400">Sign-Off Authority:</span>
+              <span id="authorityDisplay" class="font-semibold text-slate-200">Line Manager / Peer Review</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-slate-400">NIST AI RMF Review:</span>
+              <span id="nistDisplay" class="font-semibold text-slate-200">Exempt / Self-Assessment</span>
+            </div>
+            <div id="overrideNotice" class="hidden text-amber-400 text-xs font-medium pt-2 flex items-center">
+              <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Automatic Override Triggered
+            </div>
+          </div>
+
+          <button onclick="alert('Submission payload generated! Integrate this with Jira Service Management or ServiceNow APIs.')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-xl transition text-sm flex items-center justify-center space-x-2 shadow-lg shadow-indigo-600/20">
+            <i class="fa-solid fa-paper-plane text-xs"></i>
+            <span>Submit Intake Request</span>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modals -->
+  <div id="modalA" class="modal fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 class="text-lg font-bold text-white mb-2">A. Autonomy & Execution Independence</h3>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Evaluates the degree to which the agent plans, selects tools, and executes multi-step chains without requiring a human operator in the loop. High autonomy increases the probability of goal drift or unexpected tool execution sequences.
+      </p>
+      <button onclick="closeModal('modalA')" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition">Close</button>
+    </div>
+  </div>
+
+  <div id="modalB" class="modal fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 class="text-lg font-bold text-white mb-2">B. Data Classification Scope</h3>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Measures the highest sensitivity level of data exposed to the model's context window, prompt history, or vector store. Restricted data introduces regulatory compliance triggers (GDPR, HIPAA, PCI-DSS) and higher indirect prompt injection impacts.
+      </p>
+      <button onclick="closeModal('modalB')" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition">Close</button>
+    </div>
+  </div>
+
+  <div id="modalC" class="modal fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 class="text-lg font-bold text-white mb-2">C. Action Execution Scope</h3>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Evaluates OWASP Excessive Agency risks. Determines whether the agent performs read-only lookups or holds active API write, update, or administrative delete execution permissions against backend systems.
+      </p>
+      <button onclick="closeModal('modalC')" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition">Close</button>
+    </div>
+  </div>
+
+  <div id="modalD" class="modal fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 class="text-lg font-bold text-white mb-2">D. Identity & Authentication Context</h3>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Assesses privilege delegation. Agents executing via delegated OAuth user contexts maintain existing RBAC controls, while shared or elevated service accounts bypass individual accountability and risk broader privilege abuse.
+      </p>
+      <button onclick="closeModal('modalD')" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition">Close</button>
+    </div>
+  </div>
+
+  <div id="modalE" class="modal fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <h3 class="text-lg font-bold text-white mb-2">E. Action Reversibility</h3>
+      <p class="text-sm text-slate-300 leading-relaxed mb-4">
+        Determines the potential impact of agent failure or hallucination. Irreversible actions (e.g., broadcasting emails, executing financial transfers) present immediate blast-radius threats requiring mandatory human-in-the-loop oversight or Tier 3 security review.
+      </p>
+      <button onclick="closeModal('modalE')" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold py-2.5 rounded-lg transition">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function calculateRisk() {
+      const form = document.getElementById('intakeForm');
+      const selects = form.querySelectorAll('select');
+      
+      let totalScore = 0;
+      let hasOverride = false;
+
+      selects.forEach(select => {
+        const val = parseInt(select.value, 10);
+        totalScore += val;
+        
+        const selectedOption = select.options[select.selectedIndex];
+        if (selectedOption.dataset.override === "true") {
+          hasOverride = true;
+        }
+      });
+
+      document.getElementById('scoreDisplay').innerText = totalScore;
+
+      const tierCard = document.getElementById('tierCard');
+      const tierBadge = document.getElementById('tierBadge');
+      const tierTitle = document.getElementById('tierTitle');
+      const tierDesc = document.getElementById('tierDesc');
+      const slaDisplay = document.getElementById('slaDisplay');
+      const authorityDisplay = document.getElementById('authorityDisplay');
+      const nistDisplay = document.getElementById('nistDisplay');
+      const overrideNotice = document.getElementById('overrideNotice');
+
+      if (hasOverride || totalScore >= 12) {
+        // Tier 3
+        tierCard.className = "p-4 rounded-xl border transition-all duration-300 bg-rose-950/40 border-rose-500/40 text-rose-300";
+        tierBadge.className = "text-xs px-2 py-0.5 rounded-full font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30";
+        tierBadge.innerText = "Tier 3";
+        tierTitle.innerText = "High Risk Agent";
+        tierDesc.innerText = "Significant blast radius or high-impact permissions. Comprehensive security & AI risk evaluation required.";
+        slaDisplay.innerText = "5–7 Business Days";
+        authorityDisplay.innerText = "AppSec / CISO & AI Governance Board";
+        nistDisplay.innerText = "Full NIST AI RMF Assessment";
+        
+        if (hasOverride) {
+          overrideNotice.classList.remove('hidden');
+        } else {
+          overrideNotice.classList.add('hidden');
+        }
+      } else if (totalScore >= 6) {
+        // Tier 2
+        tierCard.className = "p-4 rounded-xl border transition-all duration-300 bg-amber-950/40 border-amber-500/40 text-amber-300";
+        tierBadge.className = "text-xs px-2 py-0.5 rounded-full font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30";
+        tierBadge.innerText = "Tier 2";
+        tierTitle.innerText = "Medium Risk Assistant";
+        tierDesc.innerText = "Moderate capability or internal data access. Requires lightweight security and identity boundary validation.";
+        slaDisplay.innerText = "2–3 Business Days";
+        authorityDisplay.innerText = "AppSec Reviewer / Security Lead";
+        nistDisplay.innerText = "Lightweight Control Check";
+        overrideNotice.classList.add('hidden');
+      } else {
+        // Tier 1
+        tierCard.className = "p-4 rounded-xl border transition-all duration-300 bg-emerald-950/40 border-emerald-500/40 text-emerald-300";
+        tierBadge.className = "text-xs px-2 py-0.5 rounded-full font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+        tierBadge.innerText = "Tier 1";
+        tierTitle.innerText = "Low Risk Assistant";
+        tierDesc.innerText = "Minimal blast radius. Standard auto-approval or lightweight sign-off.";
+        slaDisplay.innerText = "< 24 Hours (Fast-Track)";
+        authorityDisplay.innerText = "Line Manager / Peer Review";
+        nistDisplay.innerText = "Exempt / Self-Assessment";
+        overrideNotice.classList.add('hidden');
+      }
+    }
+
+    // Initial calculation on page load
+    calculateRisk();
+  </script>
+</body>
+</html>
