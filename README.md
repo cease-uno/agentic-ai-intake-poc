@@ -6,6 +6,8 @@
 
 An interactive, single-page web application and risk-scoring engine designed to streamline, classify, and triage incoming **Agentic AI** solutions across the enterprise.
 
+**Fastest Method to Live Demo:** Download the index.html file to your desktop. Open it with Edge or Chrome. 
+
 Built on top of established AI safety, cybersecurity, and risk management standards—specifically the **NIST AI Risk Management Framework (AI RMF 1.0)** and the **OWASP Top 10 for LLMs & Agentic AI**—this Proof of Concept (PoC) demonstrates how organizations can achieve rapid AI adoption without compromising security, data privacy, or operational control.
 
 ---
