@@ -12,7 +12,7 @@ Built on top of established AI safety, cybersecurity, and risk management standa
 
 ---
 
-## 🎯 Intended Purpose & ITSM / Jira Integration
+## Intended Purpose & ITSM / Jira Integration
 
 The primary purpose of **agentic-ai-intake-poc** is to serve as a standardized intake mechanism that can be integrated directly into enterprise ITSM solution catalogs (such as **ServiceNow**) or **Jira Service Management (JSM)**.
 
@@ -23,7 +23,7 @@ By embedding this scoring logic into your existing ticketing or service catalog 
 
 ---
 
-## 📚 Governance Framework & Foundations
+## Governance Framework & Foundations
 
 The underlying intake questions and scoring logic are directly anchored in two leading industry frameworks:
 
@@ -32,7 +32,7 @@ The underlying intake questions and scoring logic are directly anchored in two l
 
 ---
 
-## 💡 How the Portal Works
+##  How the Portal Works
 
 The portal provides a **lightweight, self-service intake process** that automatically evaluates an agent's capability, data scope, and privilege boundaries. It converts user responses into a real-time risk score, automatically routing requests to the appropriate review track:
 
@@ -52,7 +52,7 @@ Users complete five key technical and operational evaluation questions:
 
 ---
 
-## 🛠️ Real-Time Dynamic Scoring Engine
+## Real-Time Dynamic Scoring Engine
 
 As the user selects options, an embedded JavaScript engine calculates a cumulative risk score ($0–24$ points) in real time:
 
@@ -68,7 +68,7 @@ The sidebar continuously updates to reflect:
 
 ---
 
-## 🚀 Getting Started & Deployment
+## Getting Started & Deployment
 
 Since the PoC is contained within a single standalone file, deployment is instant:
 
@@ -77,7 +77,7 @@ Since the PoC is contained within a single standalone file, deployment is instan
    git clone https://github.com/cease-uno/agentic-ai-intake-poc.git
 
 ---
-## ⚙️ Customization & Risk Taxonomy Alignment
+## Customization & Risk Taxonomy Alignment
 
 The scoring logic in **agentic-ai-intake-poc** is fully modular and designed to adapt to your enterprise risk appetite:
 
